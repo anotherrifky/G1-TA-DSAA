@@ -48,7 +48,7 @@ class Lagu {
   
     /** Menampilkan judul, artis, dan durasi lagu. */ 
     public void tampilkanInfo() { 
-        System.out.println(judul + " - " + artis + " (" + durasi + " menit)"); 
+        System.out.printf("%s - %s (%.2f menit)%n", judul, artis, durasi);
     } 
 } 
 
