@@ -12,7 +12,7 @@ class Lagu {
     // Enkapsulasi: semua atribut dibuat private
     private String judul;
     private String artis;
-    private double durasi; // dalam menit
+    private double durasi; // dalam detik
 
     // Constructor untuk menginisialisasi data lagu
     public Lagu(String judul, String artis, double durasi) {
@@ -31,11 +31,17 @@ class Lagu {
     public void setArtis(String artis)    { this.artis = artis; }
     public void setDurasi(double durasi)  { this.durasi = durasi; }
 
+    // Mengubah durasi dalam detik menjadi format menit:detik (mm:ss)
+    public static String formatWaktu(double detik) {
+        int total = (int) detik;
+        return String.format("%d:%02d", total / 60, total % 60);
+    }
+
     // Menampilkan informasi lengkap lagu
     public void tampilkanInfo() {
         System.out.println("Judul  : " + judul);
         System.out.println("Artis  : " + artis);
-        System.out.println("Durasi : " + durasi + " menit");
+        System.out.println("Durasi : " + formatWaktu(durasi) + " menit");
     }
 }
 
@@ -132,17 +138,18 @@ public class PlaylistRekursif {
 
     // ===================== Integrasi & Demo =====================
     public static void main(String[] args) {
+        // Durasi dalam detik (menit x 60 + detik)
         Lagu[] semua = {
-            new Lagu("Perfect", "Ed Sheeran", 4.23),
-            new Lagu("Shivers", "Ed Sheeran", 3.50),
-            new Lagu("Fix You", "Coldplay", 4.52),
-            new Lagu("Yellow", "Coldplay", 4.29),
-            new Lagu("Viva La Vida", "Coldplay", 4.02),
-            new Lagu("Bohemian Rhapsody", "Queen", 5.55),
-            new Lagu("Hello", "Adele", 4.55),
-            new Lagu("Someone Like You", "Adele", 4.45),
-            new Lagu("Photograph", "Ed Sheeran", 4.18),
-            new Lagu("Paradise", "Coldplay", 4.38)
+            new Lagu("Perfect", "Ed Sheeran", 263),          
+            new Lagu("Shivers", "Ed Sheeran", 230),         
+            new Lagu("Fix You", "Coldplay", 292),        
+            new Lagu("Yellow", "Coldplay", 269),             
+            new Lagu("Viva La Vida", "Coldplay", 242),       
+            new Lagu("Bohemian Rhapsody", "Queen", 355),  
+            new Lagu("Hello", "Adele", 295),                
+            new Lagu("Someone Like You", "Adele", 285),    
+            new Lagu("Photograph", "Ed Sheeran", 258),      
+            new Lagu("Paradise", "Coldplay", 278)           
         };
 
         // ---------- Demo dengan 5 lagu --------------
@@ -151,9 +158,11 @@ public class PlaylistRekursif {
 
         System.out.println("=== ANALISIS REKURSIF PLAYLIST ===");
         System.out.println("Jumlah lagu     : " + lagu.length);
-        System.out.printf("Total durasi    : %.2f menit%n", totalDurasi(lagu, lagu.length));
-        System.out.printf("Lagu terpanjang : \"%s\" - %s (%.2f menit)%n",
-                terpanjang.getJudul(), terpanjang.getArtis(), cariDurasiTerpanjang(lagu, 0));
+        System.out.printf("Total durasi    : %s menit%n",
+                Lagu.formatWaktu(totalDurasi(lagu, lagu.length)));
+        System.out.printf("Lagu terpanjang : \"%s\" - %s (%s menit)%n",
+                terpanjang.getJudul(), terpanjang.getArtis(),
+                Lagu.formatWaktu(cariDurasiTerpanjang(lagu, 0)));
 
         System.out.println();
         System.out.println("Daftar lagu (ditampilkan terbalik):");
